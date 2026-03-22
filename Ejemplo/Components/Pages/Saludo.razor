@@ -1,6 +1,30 @@
 ﻿@page "/saludo"
+@rendermode InteractiveServer
 <h3>Saludo</h3>
 
 Hola, buenas.
 
-Esta página es de práctica, para familiarizarnos con Blazor.
+<div class="alert alert-success">
+    @_letrero
+</div>
+
+@* <div class="alert alert-success">
+    @ChildContent
+</div> *@
+
+<div class="container">
+    <label for="txtCosa">Nombre: </label>
+    <input id="txtCosa" @bind="letrero"/>
+    <button class="btn btn-primary" @onclick="Saludar">Saludar</button>
+</div>
+
+@code {
+    [Parameter]
+    public string letrero { get; set; } = "¡Hola!";
+    private string _letrero = "¡Hola mundo!";
+    // [Parameter]
+    // public RenderFragment? ChildContent { get; set; }
+    void Saludar() {
+        _letrero = "¡Hola, " + letrero + "!";
+    }
+}

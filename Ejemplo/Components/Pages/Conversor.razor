@@ -1,0 +1,28 @@
+﻿@page "/conversor"
+@rendermode InteractiveServer
+<h3>Conversor</h3>
+
+<div class="container">
+    <label for="txtPesos">Pesos Mexicanos: </label>
+    <input id="txtPesos" @bind="pesos" />
+    <button class="btn btn-primary" @onclick="conversion">Calcular cambio</button>
+
+    <p>Dolares el 21/03/2026: @dolar</p>
+    <p>Euros el 21/03/2026: @euro</p>
+    <p>Libras esterlinas el 21/03/2026: @libra</p>
+</div>
+
+@code {
+    [Parameter]
+    public float pesos { get; set; }
+    double dolar;
+    double euro;
+    double libra;
+
+    private void conversion() 
+    {
+        dolar = pesos * 0.056;
+        euro = pesos * 0.048;
+        libra = pesos * 0.042;
+    }
+}
