@@ -5,7 +5,8 @@
 Hola, buenas.
 
 <div class="alert alert-success">
-    @_letrero
+    @_letrero <br />
+    @($"Tienes {_edad} años" /*$ es para incrustar variables en una cadena */)
 </div>
 
 @* <div class="alert alert-success">
@@ -16,12 +17,17 @@ Hola, buenas.
     <label for="txtCosa">Nombre: </label>
     <input id="txtCosa" @bind="letrero"/>
     <button class="btn btn-primary" @onclick="Saludar">Saludar</button>
+
+    
+    <label for="txtEdad">Edad: </label>
+    <input id="txtEdad" type="number" @bind="_edad" />
 </div>
 
 @code {
     [Parameter]
     public string letrero { get; set; } = "¡Hola!";
     private string _letrero = "¡Hola mundo!";
+    private int _edad;
     // [Parameter]
     // public RenderFragment? ChildContent { get; set; }
     void Saludar() {

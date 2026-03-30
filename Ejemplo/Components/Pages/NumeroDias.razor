@@ -1,0 +1,54 @@
+﻿@page "/numeroDias";
+@rendermode InteractiveServer
+
+<h3>Días del mes</h3>
+<div class="container">
+    <label for="txtMes">Mes</label>
+    <input id="txtMes"type="number" @bind="mes"/>
+
+    <label for="txtAgno">Año</label>
+    <input id="txtAgno"type="number" @bind="agno"/>
+</div>
+
+<button class="btn-primary" onclick="@Dias">Calcular</button>
+
+<h5>@res</h5>
+
+@code {
+    public int mes, agno, res;
+
+    public void Dias()
+    {
+        switch(mes)
+        {
+            case 2:
+                res = esBisiesto(agno) ? 29 : 28;
+                break;
+            case 4: case 6: case 9: case 11:
+                res = 30;
+                break;
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                res = 31;
+                break;
+            default:
+                res = -1;
+                break;
+        }
+    }
+
+    private bool esBisiesto(int agno)
+    {
+        /*
+        * Un año es bisiesto cuando es múltiplo de 4 y no de 100, o cuando es múltiplo de 400. 
+         * Por ejemplo, el año 2000 por las dos primeras condiciones no sería bisiesto, pero sí lo es porque es múltiplo de 400; 
+        * el año 2100 no es bisiesto porque aunque sea múltiplo de 4, también lo es de 100 y no es múltiplo de 400. 
+         */
+        if (agno % 400 == 0 || (agno % 4 == 0 && agno % 100 != 0))
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+}
