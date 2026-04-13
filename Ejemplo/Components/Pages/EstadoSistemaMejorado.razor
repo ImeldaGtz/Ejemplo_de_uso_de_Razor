@@ -1,0 +1,58 @@
+﻿<h3>EstadoSistemaMejorado</h3>
+
+<div class="@_class">
+    <p>@_letrero</p>
+</div>
+
+@code {
+    [Parameter]
+    public int CodigoEstado { get; set; }
+
+    private string _class = "alert alert-dark";
+    private string _letrero = "Estado desconocido";
+
+    protected override void OnInitialized()
+    {
+
+        switch(CodigoEstado) {
+            case 200:
+                _class = "alert alert-success";
+                _letrero = "Contenido encontrado";
+                break;
+            case 404:
+                _class = "alert alert-warning";
+                _letrero = "Contenido no encontrado";
+                break;
+            case 500:
+                _class = "alert alert-danger";
+                _letrero = "Error interno del sistema";
+                break;
+            default:
+                _class = "alert alert-dark";
+                _letrero = "Estado desconocido";
+                break;
+        }   
+    }
+
+    protected override void OnParametersSet()
+    {
+        switch(CodigoEstado) {
+            case 200:
+                _class = "alert alert-success";
+                _letrero = "Contenido encontrado";
+                break;
+            case 404:
+                _class = "alert alert-warning";
+                _letrero = "Contenido no encontrado";
+                break;
+            case 500:
+                _class = "alert alert-danger";
+                _letrero = "Error interno del sistema";
+                break;
+            default:
+                _class = "alert alert-dark";
+                _letrero = "Estado desconocido";
+                break;
+        }   
+    }
+}
