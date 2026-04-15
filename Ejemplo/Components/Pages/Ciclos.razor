@@ -4,11 +4,14 @@
 <h3>Ciclos</h3>
 
 <div class="container">
+        <input id="txtEdad" type="number" @bind="_valorCiclo" />
 
-    <label for="txtEdad">Edad: </label>
-    <input id="txtEdad" type="number" @bind="_valorCiclo" />
-
-    <button class="btn btn-primary" @onclick="Saludar">Saludar</button>
+    <button class="btn btn-primary" @onclick="Empezar">Empezar</button>
+    <button class="btn btn-primary" @onclick="Guardar">Guardar</button>
+    <button class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
+    <button class="btn btn-primary" @onclick="Existe">Existe</button>
+    <button class="btn btn-danger" @onclick="Limpiar">Limpiar</button>
+    <button class="btn btn-danger" @onclick="EncontradoEn">Encontrado en</button>
 </div>
 
     @* <ul>
@@ -21,16 +24,60 @@
 
     <hr/>
 
+    calificaciones guardadas: @_calificaiones.Count() <br /> 
+@if(_calificaiones.Count >0)
+{
+
+    <ul class="mt-3">
+
+        @foreach(var calificacion in _calificaiones)
+        {
+            <li>@calificacion</li>
+        }
+    </ul>
+    <ul class="mt-3">
+        @* @for(var indice = 0; indice<_calificaiones.Count; indice++)
+        {
+            <li>@_calificaiones[indice]</li>
+        } *@
+
+        @foreach(var calificacion in _calificaiones.OrderBy(va=> va))
+        {
+            <li>@calificacion</li>
+        }
+    </ul>
+    
+<ul class="mt-3">
+
+        @foreach (var calificacion in _calificaiones.Select(n => n * 1.5)) 
+        {
+        <li>@calificacion</li>
+    }
+</ul>
+<ul class="mt-3">
+
+        @foreach (var calificacion in _calificaiones.Skip(2).Take(2)) 
+        {
+        <li>@calificacion</li>
+    }
+</ul>
+}
+<hr />
+
+@_mostrar
+
     @((MarkupString)letrero /*Renderiza lo que contenga la cadena*/) 
 @code {
     private int _valorCiclo, _indice, _edad;
     private bool _mostrar = false;
     private string letrero = "" ;
+    private List<int> _calificaiones = new(); // Guardame memoria para esta lista :>
 
-    private void Saludar()
+    private void Empezar()
     {
         _indice = 0;
         letrero = "<ul class='mt-3'>";
+
         while(_indice < _valorCiclo)
         {
             letrero += $"<li>Valor del ciclo: {_indice}</li>";
@@ -48,5 +95,36 @@
         // } while (_indice < _valorCiclo);
         // letrero += "</ul>";
 
+        // for(var indice = 0; indice < _valorCiclo; indice++)
+        // {
+        //     letrero += $"<li>Valor del ciclo: {indice}</li>";
+        // };
+        // letrero += "</ul>";
+
     }
+    public void Guardar()
+    {
+        _calificaiones.Add(_valorCiclo);
+    }
+    public void Eliminar()
+    {
+        _calificaiones.Remove(_valorCiclo);
+    }
+    public void Existe()
+    {
+        _mostrar = _calificaiones.Contains(_valorCiclo);
+    }
+    public void Limpiar()
+    {
+        _calificaiones.Clear();
+    }
+    public void EncontradoEn()
+    {
+        letrero = (_calificaiones.IndexOf(_valorCiclo)).ToString();
+    }
+    public void Insertar()
+    {
+        _calificaiones.Insert(0, _valorCiclo);
+    }
+
 }
